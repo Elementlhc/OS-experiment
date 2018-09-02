@@ -1,0 +1,31 @@
+#ifndef __LAOMD_FUNCTIONAL_
+#define __LAOMD_FUNCTIONAL_
+
+template<typename T>
+class equal_to {
+public:
+	bool operator()(const T& a, const T& b)
+	{
+		return a == b;
+	}
+};
+
+template<typename T>
+class less {
+public:
+	bool operator()(const T& a, const T& b)
+	{
+		return a < b;
+	}
+};
+
+template<typename T>
+class greater {
+public:
+	bool operator()(const T& a, const T& b)
+	{
+		return a > b;
+	}
+};
+
+#endif // __LAOMD_FUNCTIONAL_

@@ -1,0 +1,28 @@
+#ifndef LAOMD_OSTREAM
+#define LAOMD_OSTREAM
+
+#include <stdio.h>
+
+class Ostream
+{
+public:
+	Ostream& operator<< (char c)
+	{
+		putch(c);
+		return *this;
+	}
+
+	Ostream& operator<< (int x)
+	{
+		putInt(x);
+		return *this;
+	}
+
+	Ostream& operator<< (const char* s)
+	{
+		puts(s);
+		return *this;
+	}
+};
+
+#endif // LAOMD_OSTREAM

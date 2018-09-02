@@ -1,0 +1,123 @@
+#ifndef LAOMD_STRING
+#define LAOMD_STRING
+
+#include <string.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+class String : public Vector<char>
+{
+public:
+	String() : Vector<char>()
+	{
+
+	}
+
+	String(const char* s) : String()
+	{
+		*this = s;
+	}
+
+	String(const String& other) : String(other.data())
+	{
+
+	}
+
+	String(const_iterator first, const_iterator last) : Vector<char>(first, last)
+	{
+
+	}
+
+	void push_back(char c)
+	{
+		Vector<char>::push_back(c);
+		(*this)[size()] = 0;
+	}
+
+	void pop_back()
+	{
+		Vector<char>::pop_back();
+		(*this)[size()] = 0;
+	}
+
+	void reverse()
+	{
+		if(!empty()) {
+			iterator b = begin(), e = end();
+			--e;
+			while(b < e) {
+			    swap(*b, *e);
+			    b++;
+			    e--;
+			}
+		}
+	}
+
+	bool starts_with(const String& sub) const
+	{
+		const_iterator first1 = begin(), first2 = sub.begin();
+		return mismatch(first2, sub.end(), first1, end()) == sub.end();
+	}
+
+	String& operator+=(const String& other)
+	{
+		int s = size();
+		int total_len = s + other.size();
+		if(total_len >= _capacity) {
+			extend(2 * total_len + 1);
+		}
+		strcpy(data() + s, other.data());
+		_size = total_len;
+		return *this;
+	}
+
+	String& operator=(const char* s)
+	{
+		int len = strlen(s);
+		int cap = capacity();
+		if(len >= cap) {
+			extend(len + 1);
+		}
+		strcpy(data(), s);
+		_size = len;
+		return *this;
+	}
+
+	bool operator==(const String& other) const
+	{
+		return !(*this < other || other < *this);
+	}
+
+	bool operator!=(const String& other) const
+	{
+		return !(*this == other);
+	}
+
+	bool operator<(const String& other) const
+	{
+		return strcmp(data(), other.data()) < 0;
+	}
+
+	bool operator>(const String& other) const
+	{
+		return other < *this;
+	}
+};
+
+Istream& operator>> (Istream& in, String& a)
+{
+	char c = 0;
+	cin >> c;
+	while(c != '\r') {
+	    a.push_back(c);
+	    cin >> c;
+	}
+	return in;
+}
+
+Ostream& operator<< (Ostream& out, const String& a)
+{
+	return out << a.data();
+}
+#endif // LAOMD_STRING

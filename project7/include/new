@@ -1,0 +1,32 @@
+#ifndef NEW
+#define NEW
+#include <bits/c++config.h>
+#include <malloc.h>
+
+void* operator new(size_t size)
+{       // try to allocate size bytes  
+    void *p;  
+    while ((p = malloc(size)) == 0);
+    return p;
+}
+
+void* operator new[](size_t size)
+{
+	return ::operator new(size);
+} 
+
+void operator delete( void * p )  
+{  
+    free( p );  
+} 
+
+void operator delete[](void * p)
+{
+	::operator delete(p);
+}
+
+void operator delete[](void * p, size_t)
+{
+	::operator delete[](p);
+}
+#endif // NEW

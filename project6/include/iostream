@@ -1,0 +1,11 @@
+#ifndef IOSTREAM
+#define IOSTREAM
+
+#include <istream>
+#include <ostream>
+
+Istream cin;
+Ostream cout;
+#define endl '\r'
+
+#endif // IOSTREAM

@@ -1,0 +1,13 @@
+#ifndef IOSTREAM
+#define IOSTREAM
+
+#include <istream>
+#include <ostream>
+
+namespace laomd {
+	Istream cin;
+	Ostream cout;
+	#define endl '\r'
+} // laomd
+
+#endif // IOSTREAM

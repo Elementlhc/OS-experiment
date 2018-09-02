@@ -1,0 +1,49 @@
+#ifndef __LAOMD_QUEUE_
+#define __LAOMD_QUEUE_
+
+#include <list>
+
+namespace laomd {
+	template<typename T>
+	class Queue
+	{
+	public:
+		using value_type = typename List<T>::value_type;
+		using size_type = typename List<T>::size_type;
+
+		void push(const value_type& x)
+		{
+			_data.push_back(x);
+		}
+
+		void pop() 
+		{
+			_data.pop_front();
+		}
+
+		value_type front() 
+		{
+			return _data.front();
+		}
+
+		value_type back() 
+		{
+			return _data.back();
+		}
+
+		size_type size() const
+		{
+			return _data.size();
+		}
+
+		bool empty() const
+		{
+			return _data.empty();
+		}
+	private:
+		List<T> _data;
+	};
+} // laomd
+
+
+#endif // __LAOMD_QUEUE_

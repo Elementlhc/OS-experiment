@@ -1,0 +1,157 @@
+#ifndef __LAOMD_VECTOR_H_
+#define __LAOMD_VECTOR_H_
+
+#include <new>
+
+template <typename T>
+class Vector {
+public:
+    using size_type = size_t;
+	using value_type = T;
+	using pointer = value_type*;
+	using iterator = value_type*;
+	using const_iterator = const value_type*;
+	using reference = value_type&;
+	using const_reference = const value_type&;
+	
+//  constructors    
+	Vector() {
+ 	   init(0);
+	}
+	explicit Vector(size_type n) {
+        init(n);
+	}
+
+	Vector(const_iterator first, const_iterator last) : Vector()
+	{
+		while(first != last) {
+		    push_back(*first);
+		    ++first;
+		}
+	}
+
+	Vector(const Vector& other) : Vector(0) 
+	{
+		*this = other;
+	}
+	
+//	destructor
+	~Vector() {
+		clear();
+	}
+
+	Vector& operator=(const Vector& other)
+	{
+		if(this != &other) {
+			clear();
+			extend(other._capacity);
+			for(const auto& i : other) {
+				push_back(i);
+			}
+		}
+		return *this;
+	}
+
+	size_type size() const { return _size; }
+	size_type capacity() const { return _capacity; }
+	bool empty() const { return size() == 0; }
+
+//	iterators
+	iterator begin() {
+		return _data;
+	}
+	const_iterator begin() const {
+	    return _data;
+	}
+	iterator end() {
+		return _data + _size;
+	}
+	const_iterator end() const {
+	    return _data + _size;
+	}
+//	element access
+	reference at(size_type n) {
+	    return _data[n];
+	}
+	const_reference at(size_type n) const {
+	    return _data[n];
+	}
+	reference operator[](size_type n) {
+		return at(n);
+	}
+	const_reference operator[](size_type n) const {
+	    return at(n);
+	}
+	reference front() {
+		return at(0);
+	}
+	const_reference front() const {
+	    return at(0);
+	}
+	reference back() {
+		return at(_size - 1);
+	}
+	const_reference back() const {
+	    return at(_size - 1);
+	}
+
+	void push_back(const value_type& val) {
+		if(_size >= _capacity) {
+			extend(_capacity * 2 + 1);
+		}
+		_data[_size++] = val;
+	}
+
+	void pop_back() {
+		if(_size > 0) {
+			_size--;
+		}
+	}
+
+	void clear() {
+		if (_data) {
+			delete[] _data;
+		}
+		init(0);
+	}
+
+	pointer data() 
+	{
+		return _data;
+	}
+
+	const value_type* data() const
+	{
+		return _data;
+	}
+
+protected:
+	void extend(size_type n)
+	{
+		_capacity = n;
+		pointer tmp = new value_type[_capacity]{value_type()};
+		if(_data) {
+			for (int i = 0; i < _size; ++i)
+			{
+				tmp[i] = _data[i];
+			}
+			delete[] _data;
+		}
+		_data = tmp;
+	}
+
+	void init(size_type n) {
+		_size = _capacity = n;
+		if (n == 0) {
+			_data = nullptr;
+		}
+		else {
+			extend(n);
+		}
+	}
+	
+	pointer _data;
+	size_type _size;
+	size_type _capacity;
+};
+#endif

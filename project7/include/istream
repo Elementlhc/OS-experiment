@@ -1,0 +1,18 @@
+#ifndef LAOMD_ISTREAM
+#define LAOMD_ISTREAM
+
+#include <stdio.h>
+
+namespace laomd {
+	class Istream
+	{
+	public:
+		Istream& operator>> (char& c)
+		{
+			c = getch();
+			return *this;
+		}
+	};
+} // laomd
+
+#endif // LAOMD_ISTREAM

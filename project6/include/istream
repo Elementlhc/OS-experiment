@@ -1,0 +1,16 @@
+#ifndef LAOMD_ISTREAM
+#define LAOMD_ISTREAM
+
+#include <stdio.h>
+
+class Istream
+{
+public:
+	Istream& operator>> (char& c)
+	{
+		c = getch();
+		return *this;
+	}
+};
+
+#endif // LAOMD_ISTREAM

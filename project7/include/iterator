@@ -1,0 +1,25 @@
+#ifndef __LAOMD_ITERATOR_
+#define __LAOMD_ITERATOR_
+
+#include <stddef.h>
+
+namespace laomd {
+	template<typename Iter>
+	ptrdiff_t distance(Iter first, Iter last)
+	{
+		ptrdiff_t dis = 0;
+		while(first != last) {
+		    ++first;
+		    ++dis;
+		}
+		return dis;
+	}
+
+	template<typename Iter>
+	void advance(Iter& iter, ptrdiff_t dis)
+	{
+		while(dis--) ++iter;
+	}
+} // laomd
+
+#endif // __LAOMD_ITERATOR_
